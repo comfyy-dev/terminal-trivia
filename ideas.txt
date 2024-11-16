@@ -1,0 +1,9 @@
+linked list with structure to hold player details
+
+player structure might contain:
+ID
+player name
+points
+current answer
+powerup
+colour
