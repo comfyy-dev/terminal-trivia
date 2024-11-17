@@ -9,6 +9,7 @@
 #include <time.h>
 #include <ctype.h>
 #include <errno.h> // For EINTR
+#include <termios.h>
 
 #define BLACK   "\033[30m"       // foreground colours
 #define RED     "\033[31m"
@@ -54,7 +55,7 @@ typedef struct {
     char name[21];
     int id;
     int score;
-    int answer;
+    char answer[50];
     int powerup;
     char *colour;
 } Player;
@@ -69,5 +70,7 @@ void intro(int * total_players, Node **head);
 void clear_terminal();
 Node *create_player(Node **head, int *joined_players);
 void clock_timer();
+void get_hidden_input(Node *current);
+
 
 #endif

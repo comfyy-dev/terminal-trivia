@@ -56,8 +56,7 @@ Node *create_player(Node **head, int *joined_players) {
 
     // Initialize player fields
     new_node->player.score = 0;
-    new_node->player.powerup = 0;
-    new_node->player.answer = 0;
+    new_node->player.powerup = 0; 
     new_node->player.colour = NULL;
     new_node->next = NULL;
     new_node->player.id = *joined_players;
@@ -84,7 +83,7 @@ Node *create_player(Node **head, int *joined_players) {
     #ifdef DEBUG
         printf(BOLD BLUE"\nPlayer Score: %d\n", new_node->player.score);
         printf(BOLD BLUE"\nPlayer Powerup: %d\n", new_node->player.powerup);
-        printf(BOLD BLUE"\nPlayer Answer: %d\n", new_node->player.answer);
+        printf(BOLD BLUE"\nPlayer Answer: %s\n", new_node->player.answer);
         printf(BOLD BLUE"\nPlayer Id: %d\n", new_node->player.id);
     #endif
     return new_node; // Return the newly created node
@@ -151,4 +150,60 @@ void clock_timer() {
     }
     system("aplay ./times_up.wav > /dev/null 2>&1");
     printf("\rTimes Up                              \n");
+}
+
+
+
+void get_hidden_input(Node *current) {
+    if (current == NULL) {
+        fprintf(stderr, "Error: Player is null.\n");
+        return;
+    }
+
+    struct termios oldt, newt;
+    char buffer[50]; // Fixed size for input
+    size_t size = sizeof(buffer);
+    size_t i = 0;
+    char ch;
+
+    // Get current terminal settings
+    tcgetattr(STDIN_FILENO, &oldt);
+    newt = oldt;
+
+    // Disable echo
+    newt.c_lflag &= ~(ECHO);
+    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+
+    printf(BOLD RED"What is %s's answer: ", current->player.name);
+    fflush(stdout);
+
+    // Read characters one by one
+    while (i < size - 1 && read(STDIN_FILENO, &ch, 1) == 1 && ch != '\n') {
+        if (ch == 127) { // Handle backspace
+            if (i > 0) {
+                i--;
+                printf("\b \b"); // Remove last asterisk
+                fflush(stdout);
+            }
+        } else {
+            buffer[i++] = ch;
+        }
+    }
+    buffer[i] = '\0'; // Null-terminate the string
+
+    printf("\n");
+
+    // Store input in player's answer
+    strncpy(current->player.answer, buffer, sizeof(current->player.answer) - 1);
+    current->player.answer[sizeof(current->player.answer) - 1] = '\0';
+
+    #ifdef DEBUG
+        printf(BOLD BLUE"\nPlayer Score: %d" NORMAL, current->player.score);
+        printf(BOLD BLUE"\nPlayer Powerup: %d" NORMAL, current->player.powerup);
+        printf(BOLD BLUE"\nPlayer Answer: %s" NORMAL, current->player.answer);
+        printf(BOLD BLUE"\nPlayer Id: %d\n" NORMAL, current->player.id);
+    #endif
+
+    // Restore terminal settings
+    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 }
