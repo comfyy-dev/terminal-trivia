@@ -8,6 +8,7 @@
 #include <math.h>
 #include <time.h>
 #include <ctype.h>
+#include <errno.h> // For EINTR
 
 #define BLACK   "\033[30m"       // foreground colours
 #define RED     "\033[31m"
@@ -58,14 +59,15 @@ typedef struct {
     char *colour;
 } Player;
 
-typedef struct {
+typedef struct Node {
     Player player;
     struct Node *next;
 } Node;
 
+void sleep_seconds(double seconds);
 void intro(int * total_players, Node **head);
 void clear_terminal();
 Node *create_player(Node **head, int *joined_players);
-
+void clock_timer();
 
 #endif

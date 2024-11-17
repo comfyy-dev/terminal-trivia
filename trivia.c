@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include "trivia.h"
 #include "question.h"
 
@@ -10,6 +11,16 @@ void clear_terminal() {
             perror("Failed to clear terminal");
         } 
     #endif
+}
+
+void sleep_seconds(double seconds) {
+    struct timespec ts;
+    ts.tv_sec = (time_t)seconds;                           // Whole seconds
+    ts.tv_nsec = (seconds - ts.tv_sec) * 1e9;              // Fractional part converted to nanoseconds
+
+    while (nanosleep(&ts, &ts) == -1 && errno == EINTR) {  // Retry if interrupted by a signal
+        // Continue retrying with the remaining time
+    }
 }
     
 Node *create_player(Node **head, int *joined_players) {
@@ -66,7 +77,7 @@ Node *create_player(Node **head, int *joined_players) {
     for (int i = 0;i < 4; i++) {
         printf(BOLD RED".");
         fflush(stdout);
-        usleep(400000);
+        sleep_seconds(0.25);
     }
     (*joined_players)++;
 
@@ -87,7 +98,7 @@ void intro(int *total_players, Node **head) {
     for (int i = 0; i < 27; i++) {
         printf(BOLD RED"-"NORMAL);
         fflush(stdout);
-        usleep(250000);
+        sleep_seconds(0.25);
     }
     printf(BOLD RED"|\n\n"NORMAL);
 
@@ -114,13 +125,30 @@ void intro(int *total_players, Node **head) {
     }
     int joined_players = 0;
     while (joined_players != *total_players) {
-        if (create_player(&head, &joined_players) == NULL) {
+        if (create_player(head, &joined_players) == NULL) {
             fprintf(stderr, "Failed to create the first player.\n");
-            return EXIT_FAILURE;
+            exit(EXIT_FAILURE);
         }
         if (joined_players != *total_players) {
             printf(BOLD RED"\nOk. Next?\n\n");
         }
     }
     printf(BOLD RED"\nLet us begin\n");
+}
+
+
+void clock_timer() {
+    for (int i = 5; i >= 0; i--) {
+        if (i <= 10) {
+            printf(NORMAL BOLD RED"\rCountdown: " BOLD RED ON_WHITE"%d" NORMAL BOLD RED  
+                   " seconds remaining...   ", i); // Overwrite the same line
+            printf("\a");
+        } else {
+            printf(BOLD RED"\rCountdown: %d  seconds remaining...   ", i); // Overwrite the same line
+        }
+        fflush(stdout);
+        sleep_seconds(1.0);
+    }
+    system("aplay ./times_up.wav > /dev/null 2>&1");
+    printf("\rTimes Up                              \n");
 }

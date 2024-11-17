@@ -8,24 +8,26 @@ int total_players = 0;
 int total_questions = 0;
 
 int main(int argc, char *argv[]) {
-
-    /*                              Start up Sequence                         */
-    //clear_terminal();
-    
     if (argc != 2) { // Expect exactly one argument (the file name)
         fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
         return EXIT_FAILURE;
     }
     const char *questions_file = argv[1]; // File name passed as argument
 
-    intro(&total_players, phead);
+
+
+    /*                             Start up Sequence                         */
+
+    //clear_terminal();
+    //intro(&total_players, &phead);
     create_questions_list(questions_file, &qhead, &total_questions);
 
     /*                              Trivia Loop                               */
     while (qhead && total_questions > 0) {
         // if player powerup >  0 ask to use
         QNode *current = get_question(&qhead, total_questions);
-        //timer countdown
+        clock_timer();
+       
         //ask for player answers
         //delay
         // Reveal Answer

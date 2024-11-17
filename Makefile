@@ -1,6 +1,6 @@
 # Compiler and flags
 CC = gcc
-CFLAGS = -Wall -Wextra -std=c99
+CFLAGS = -D_POSIX_C_SOURCE=199309L -Wall -Wextra -std=c99
 
 # Source files
 SRCS = source.c trivia.c question.c
