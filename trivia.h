@@ -49,7 +49,7 @@
 #define BLINK      "\033[5m"
 #define INVERT	   "\033[7m"
 
-#define STRIKE     "\033[9m"
+
 
 typedef struct {
     char name[21];

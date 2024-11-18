@@ -10,7 +10,7 @@ RELEASE_BIN = comfytrivia
 DEBUG_BIN = comfytrivia_debug
 
 # Release build and run
-release: CFLAGS += -O2
+release: CFLAGS += -DRELEASE -O2
 release:
 	$(CC) $(CFLAGS) -o $(RELEASE_BIN) $(SRCS)
 	./$(RELEASE_BIN) q_a.txt

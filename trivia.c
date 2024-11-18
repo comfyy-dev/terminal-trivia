@@ -3,6 +3,12 @@
 #include "trivia.h"
 #include "question.h"
 
+char * colours [] = { CS_O, CS_B, CS_G, CS_Y, CS_M, 
+                      CYAN, WHITE, BLACK ON_WHITE, BLACK ON_GREEN, BLACK ON_RED,
+                      BLACK ON_YELLOW, BLACK ON_BLUE, BLACK ON_MAGENTA, BLACK ON_CYAN, WHITE ON_GREEN,
+                      WHITE ON_CYAN, WHITE ON_BLUE, WHITE ON_RED, WHITE ON_YELLOW, WHITE BCS_O
+                    };
+
 void clear_terminal() {
     #ifdef _WIN32   // Windows
         system("cls"); 
@@ -53,11 +59,11 @@ Node *create_player(Node **head, int *joined_players) {
             fprintf(stderr, BOLD RED"\nError reading input. Please try again.\n");
         }
     }
-
+   
     // Initialize player fields
     new_node->player.score = 0;
     new_node->player.powerup = 0; 
-    new_node->player.colour = NULL;
+    new_node->player.colour = colours[*joined_players];
     new_node->next = NULL;
     new_node->player.id = *joined_players;
 
@@ -72,7 +78,8 @@ Node *create_player(Node **head, int *joined_players) {
         current->next = new_node;
     }
 
-    printf(BOLD RED"\nWelcome. Go choose your beverage.\n");
+    printf(BOLD RED "\nWelcome %s%s" BOLD RED ". Go choose your beverage.\n",
+       new_node->player.colour, new_node->player.name);
     for (int i = 0;i < 4; i++) {
         printf(BOLD RED".");
         fflush(stdout);
@@ -132,7 +139,7 @@ void intro(int *total_players, Node **head) {
             printf(BOLD RED"\nOk. Next?\n\n");
         }
     }
-    printf(BOLD RED"\nLet us begin\n");
+    printf(BOLD RED"\nLet us begin\n\n");
 }
 
 
@@ -174,7 +181,7 @@ void get_hidden_input(Node *current) {
     newt.c_lflag &= ~(ECHO);
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 
-    printf(BOLD RED"What is %s's answer: ", current->player.name);
+    printf(BOLD RED"What is %s%s's"BOLD RED" answer: ", current->player.colour, current->player.name);
     fflush(stdout);
 
     // Read characters one by one

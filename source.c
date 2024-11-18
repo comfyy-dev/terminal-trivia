@@ -17,8 +17,9 @@ int main(int argc, char *argv[]) {
 
 
     /*                             Start up Sequence                         */
-
-    //clear_terminal();
+    #ifdef RELEASE
+        clear_terminal();
+    #endif
     intro(&total_players, &phead);
     create_questions_list(questions_file, &qhead, &total_questions);
 
@@ -35,13 +36,28 @@ int main(int argc, char *argv[]) {
         }
 
         
-        printf(BOLD RED"Press Enter to continue...\n");
+        printf(BOLD RED"\nPress Enter to continue...\n");
         while (getchar() != '\n' && getchar() != EOF);
-        
-        
-        // Reveal Answer
-        // Reveal players Answers
-        // LOSERS DRINK DELAY
+
+        clear_terminal();
+
+        printf(BOLD RED"You'd be surpised that the actual answer is: \n\n"BOLD GREEN"%s\n\n" , current_question->question.answer);
+        printf(BOLD RED"Lets see how you all did...\n");
+
+        current_player = phead;
+        while (current_player != NULL) {
+            printf(BOLD RED"---------------------------------------------------------------------------------\n");
+            printf("%s%s:\t\t"BOLD GREEN"%s\n",current_player->player.colour, current_player->player.name, current_player->player.answer);
+            current_player = current_player->next;
+        }
+        printf(BOLD RED"---------------------------------------------------------------------------------\n");
+
+        printf(BOLD RED UNDERLINE "DRINK UP LOSERS\n"NORMAL);
+        printf(BOLD RED"\nPress Enter to continue...\n");
+        while (getchar() != '\n' && getchar() != EOF);
+
+        clear_terminal();
+
         // Enter players who were correct
         /* Give powerups 
                 - Truth - Ask a personal question they must answer
