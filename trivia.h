@@ -41,7 +41,7 @@
 #define BCS_Y      "\033[30m\033[48;2;241;228;66m"
 #define BCS_M      "\033[30m\033[48;2;190;45;151m"
 
-#define NORMAL	   "\033[0m"     // not bold/underline/flashing/... 
+
 #define BOLD	   "\033[1m"
 #define DIM 	   "\033[2m"
 #define ITALIC     "\033[3m"
@@ -49,7 +49,8 @@
 #define BLINK      "\033[5m"
 #define INVERT	   "\033[7m"
 
-
+#define NORMAL	   "\033[0m\033[31m\033[1m"     // not bold/underline/flashing/... 
+#define NOTHING    "\033[0m"
 
 typedef struct {
     char name[21];

@@ -39,7 +39,7 @@ Node *create_player(Node **head, int *joined_players) {
 
     // Retry mechanism for player name input
     while (1) {
-        printf(BOLD RED"\nEnter new player's name:"GREEN BOLD" ");
+        printf(NORMAL"\nEnter new player's name:"GREEN BOLD" ");
         if (fgets(new_node->player.name, sizeof(new_node->player.name), stdin) != NULL) {
             size_t len = strlen(new_node->player.name);
             if (len > 0 && new_node->player.name[len - 1] == '\n') {
@@ -53,10 +53,10 @@ Node *create_player(Node **head, int *joined_players) {
             if (strlen(new_node->player.name) > 0) {
                 break; // Exit loop if valid input
             } else {
-                printf(BOLD RED"\nName cannot be empty. Please try again.\n");
+                printf(NORMAL"\nName cannot be empty. Please try again.\n");
             }
         } else {
-            fprintf(stderr, BOLD RED"\nError reading input. Please try again.\n");
+            fprintf(stderr, NORMAL"\nError reading input. Please try again.\n");
         }
     }
    
@@ -78,10 +78,10 @@ Node *create_player(Node **head, int *joined_players) {
         current->next = new_node;
     }
 
-    printf(BOLD RED "\nWelcome %s%s" BOLD RED ". Go choose your beverage.\n",
+    printf(NORMAL "\nWelcome %s%s" NORMAL ". Go choose your beverage.\n",
        new_node->player.colour, new_node->player.name);
     for (int i = 0;i < 4; i++) {
-        printf(BOLD RED".");
+        printf(NORMAL".");
         fflush(stdout);
         sleep_seconds(0.25);
     }
@@ -99,17 +99,17 @@ Node *create_player(Node **head, int *joined_players) {
 void intro(int *total_players, Node **head) {
 
 
-    printf(BOLD RED"Parsing Universe's Knowledge"NORMAL"\n");
-    printf(BOLD RED"|"NORMAL);
+    printf(NORMAL"Parsing Universe's Knowledge"NORMAL"\n");
+    printf(NORMAL"|");
     for (int i = 0; i < 27; i++) {
-        printf(BOLD RED"-"NORMAL);
+        printf(NORMAL"-");
         fflush(stdout);
         sleep_seconds(0.25);
     }
-    printf(BOLD RED"|\n\n"NORMAL);
+    printf(NORMAL"|\n\n");
 
     while (1) {
-        printf(BOLD RED"How many individuals do you want to inebriate?"" "GREEN BOLD);
+        printf(NORMAL"How many individuals do you want to inebriate?"" "GREEN BOLD);
         
         char input[10];
         if (fgets(input, sizeof(input), stdin) != NULL) {
@@ -123,10 +123,10 @@ void intro(int *total_players, Node **head) {
                 *total_players = (int)num; // Set the value to the provided pointer
                 break;
             } else {
-                printf(BOLD RED"Invalid input. Please enter a positive integer (1-20).\n");
+                printf(NORMAL"Invalid input. Please enter a positive integer (1-20).\n");
             }
         } else {
-            printf(BOLD RED"Error reading input. Please try again.\n");
+            printf(NORMAL"Error reading input. Please try again.\n");
         }
     }
     int joined_players = 0;
@@ -136,31 +136,31 @@ void intro(int *total_players, Node **head) {
             exit(EXIT_FAILURE);
         }
         if (joined_players != *total_players) {
-            printf(BOLD RED"\nOk. Next?\n\n");
+            printf(NORMAL"\nOk. Next?\n\n");
         }
     }
-    printf(BOLD RED"\nLet us begin\n\n");
+    printf(NORMAL"\nLet us begin\n\n");
 }
 
 
 void clock_timer() {
     for (int i = 5; i >= 0; i--) {
         if (i <= 10) {
-            printf(NORMAL BOLD RED"\rCountdown: " BOLD RED ON_WHITE"%d" NORMAL BOLD RED  
+            printf(NORMAL"\rCountdown: " NORMAL ON_WHITE"%d" NORMAL  
                    " seconds remaining...   ", i); // Overwrite the same line
             printf("\a");
         } else {
-            printf(BOLD RED"\rCountdown: %d  seconds remaining...   ", i); // Overwrite the same line
+            printf(NORMAL"\rCountdown: %d  seconds remaining...   ", i); // Overwrite the same line
         }
         fflush(stdout);
         sleep_seconds(1.0);
     }
     system("aplay ./times_up.wav > /dev/null 2>&1");
-    printf("\n\rTimes Up                              \n\n");
+    printf(NORMAL"\n\rTimes Up                              \n\n");
 }
 
 void wait_for_admin() {
-    printf(BOLD RED"\nPress Enter to continue...\n");
+    printf(NORMAL"\nPress Enter to continue...\n");
     while (getchar() != '\n' && getchar() != EOF);
 }
 
@@ -184,7 +184,7 @@ void get_hidden_input(Node *current) {
     newt.c_lflag &= ~(ECHO);
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
 
-    printf(BOLD RED"What is %s%s's"BOLD RED" answer: ", current->player.colour, current->player.name);
+    printf(NORMAL"What is %s%s's"NORMAL" answer: ", current->player.colour, current->player.name);
     fflush(stdout);
 
     // Read characters one by one
@@ -211,7 +211,7 @@ void get_hidden_input(Node *current) {
         printf(BOLD BLUE"\nPlayer Score: %d" NORMAL, current->player.score);
         printf(BOLD BLUE"\nPlayer Powerup: %d" NORMAL, current->player.powerup);
         printf(BOLD BLUE"\nPlayer Answer: %s" NORMAL, current->player.answer);
-        printf(BOLD BLUE"\nPlayer Id: %d\n" NORMAL, current->player.id);
+        printf(BOLD BLUE"\nPlayer Id: %d\n" NORMAL, current->player.id );
     #endif
 
     // Restore terminal settings
@@ -225,9 +225,9 @@ void give_points(Node **head) {
     }
     Node *current = *head;
     char response[10];
-    printf(BOLD RED "Who was correct?\n");
+    printf(NORMAL "Who was correct?\n");
     while (current != NULL) {
-        printf("\r%s%s?" BOLD RED"\t (y/n):", current->player.colour, current->player.name);
+        printf("\r%s%s?" NORMAL"\t (y/n):", current->player.colour, current->player.name);
         fflush(stdout);
 
         // Scan for 'y' or 'n'
@@ -238,11 +238,11 @@ void give_points(Node **head) {
             // Check response and assign points
             if (strcmp(response, "y") == 0 || strcmp(response, "Y") == 0) {
                 current->player.score += 100; // Award 100 points
-                printf(INVERT"%s gained 100 points!\n" NORMAL BOLD RED, current->player.name);
+                printf(INVERT"%s gained 100 points!\n" NORMAL, current->player.name);
             } else if (strcmp(response, "n") == 0 || strcmp(response, "N") == 0) {
-                printf("%s received no points.\n" BOLD RED, current->player.name);
+                printf("%s received no points.\n" NORMAL, current->player.name);
             } else {
-                printf(BOLD RED "Invalid input. Please enter 'y' or 'n'.\n" BOLD RED);
+                printf(NORMAL "Invalid input. Please enter 'y' or 'n'.\n" NORMAL);
                 continue; // Repeat for the same player
             }
         }
@@ -292,10 +292,10 @@ void scoreboard(Node **head) {
     }
 
     // Print the scoreboard
-    printf(BOLD RED "\n\t\t\t\tCURRENT STANDINGS\n");
-    printf(BOLD RED "=================================================================================\n");
-    printf(BOLD RED "| %-20s | %-10s | %-20s |\n" NORMAL, "PLAYER NAME", "SCORE", "STATUS");
-    printf(BOLD RED "=================================================================================\n");
+    printf(NORMAL "\n\t\t\t\tCURRENT STANDINGS\n");
+    printf(NORMAL "=================================================================================\n");
+    printf(NORMAL "| %-20s | %-10s | %-20s |\n" NOTHING, "PLAYER NAME", "SCORE", "STATUS");
+    printf(NORMAL "=================================================================================\n");
 
     // Highlight ties and top players
     int top_score = players[0]->player.score;
@@ -304,13 +304,13 @@ void scoreboard(Node **head) {
 
         if (players[i]->player.score == top_score) {
             // Highlight the top player(s)
-            printf(BOLD GREEN "| %-20s | %-10d | %-20s |\n" NORMAL, 
+            printf(BOLD GREEN "| %-20s | %-10d | %-20s |\n" NOTHING, 
                    players[i]->player.name, 
                    players[i]->player.score, 
                    is_tied ? "TIED FOR TOP" : "LEADER");
         } else if (is_tied) {
             // Highlight tied players
-            printf(BOLD BLUE "| %-20s | %-10d | %-20s |\n" NORMAL, 
+            printf(BOLD BLUE "| %-20s | %-10d | %-20s |\n" NOTHING, 
                    players[i]->player.name, 
                    players[i]->player.score, 
                    "TIED");
@@ -323,7 +323,7 @@ void scoreboard(Node **head) {
         }
     }
 
-    printf(BOLD RED "=================================================================================\n");
+    printf(NORMAL "=================================================================================\n");
 
     // Free allocated memory
     free(players);

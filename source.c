@@ -22,11 +22,12 @@ int main(int argc, char *argv[]) {
     #endif
     intro(&total_players, &phead);
     create_questions_list(questions_file, &qhead, &total_questions);
-    clear_terminal();
+    wait_for_admin();
 
     /*                              Trivia Loop                               */
     while (qhead && total_questions > 0) {
         // if player powerup >  0 ask to use
+        clear_terminal();
         QNode *current_question = get_question(&qhead, total_questions);
         Node *current_player = phead;
         
@@ -40,6 +41,7 @@ int main(int argc, char *argv[]) {
         reveal_answer(current_question, &phead);
         wait_for_admin();
         give_points(&phead);
+        clear_terminal();
         scoreboard(&phead);
 
         // Enter players who were correct
@@ -68,7 +70,8 @@ int main(int argc, char *argv[]) {
         }
         #endif
         remove_question(&qhead, &current_question, &total_questions);
-        clear_terminal();
+        wait_for_admin();
+        
         // if final question -> double drink
     }
     printf("\n\nHope you guys enjoyed this :)\n\n\n");

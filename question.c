@@ -94,7 +94,7 @@ QNode *get_question(QNode **head, int total_questions) {
      for (int i = 0; i < random_index; i++) {
         current = current->next;
     }
-    printf(BOLD RED"Question %d: %s\n", current->question.qid, current->question.question);
+    printf(NORMAL"Question %d: %s\n", current->question.qid, current->question.question);
     return current;
 }
 
@@ -122,15 +122,15 @@ void remove_question(QNode **head, QNode **current, int *total_questions) {
 
 void reveal_answer(QNode *c_question, Node **head) {
     
-        printf(BOLD RED"You'd be surpised that the actual answer is: \n\n"BOLD GREEN"%s\n\n" , c_question->question.answer);
-        printf(BOLD RED"Lets see how you all did...\n");
+        printf(NORMAL"You'd be surpised that the actual answer is: \n\n"BOLD GREEN"%s\n\n" , c_question->question.answer);
+        printf(NORMAL"Lets see how you all did...\n");
 
         Node *current_player = *head;
         while (current_player != NULL) {
-            printf(BOLD RED"---------------------------------------------------------------------------------\n");
-            printf("%s%s:\t\t"BOLD GREEN"%s\n",current_player->player.colour, current_player->player.name, current_player->player.answer);
+            printf(NORMAL"---------------------------------------------------------------------------------\n"NORMAL);
+            printf("%s%s:\t\t"NOTHING BOLD GREEN"%s\n",current_player->player.colour, current_player->player.name, current_player->player.answer);
             current_player = current_player->next;
         }
-        printf(BOLD RED"---------------------------------------------------------------------------------\n");
-        printf(BOLD RED UNDERLINE "DRINK UP\n"NORMAL);
+        printf(NORMAL"---------------------------------------------------------------------------------\n"NORMAL);
+        printf(NORMAL UNDERLINE "DRINK UP\n"NORMAL);
 }
