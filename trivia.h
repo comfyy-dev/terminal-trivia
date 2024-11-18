@@ -70,7 +70,10 @@ void intro(int * total_players, Node **head);
 void clear_terminal();
 Node *create_player(Node **head, int *joined_players);
 void clock_timer();
+void wait_for_admin();
 void get_hidden_input(Node *current);
+void give_points(Node **head);
+void scoreboard(Node **head);
 
 
 #endif

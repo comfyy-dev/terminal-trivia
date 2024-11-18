@@ -20,5 +20,6 @@ void add_question(QNode **head, const char *question_text, const char *answer_te
 QNode *get_question(QNode **head, int total_questions);
 void remove_question(QNode **head, QNode **current, int *total_questions);
 void free_list(QNode *head);
+void reveal_answer(QNode *c_question, Node **head);
 
 #endif

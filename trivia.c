@@ -156,10 +156,13 @@ void clock_timer() {
         sleep_seconds(1.0);
     }
     system("aplay ./times_up.wav > /dev/null 2>&1");
-    printf("\rTimes Up                              \n");
+    printf("\n\rTimes Up                              \n\n");
 }
 
-
+void wait_for_admin() {
+    printf(BOLD RED"\nPress Enter to continue...\n");
+    while (getchar() != '\n' && getchar() != EOF);
+}
 
 void get_hidden_input(Node *current) {
     if (current == NULL) {
@@ -213,4 +216,115 @@ void get_hidden_input(Node *current) {
 
     // Restore terminal settings
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
+}
+
+void give_points(Node **head) {
+    if (head == NULL || *head == NULL) {
+        fprintf(stderr, "Error: Player list is empty or head is null.\n");
+        return;
+    }
+    Node *current = *head;
+    char response[10];
+    printf(BOLD RED "Who was correct?\n");
+    while (current != NULL) {
+        printf("\r%s%s?" BOLD RED"\t (y/n):", current->player.colour, current->player.name);
+        fflush(stdout);
+
+        // Scan for 'y' or 'n'
+        if (fgets(response, sizeof(response), stdin) != NULL) {
+            // Remove trailing newline
+            response[strcspn(response, "\n")] = '\0';
+
+            // Check response and assign points
+            if (strcmp(response, "y") == 0 || strcmp(response, "Y") == 0) {
+                current->player.score += 100; // Award 100 points
+                printf(INVERT"%s gained 100 points!\n" NORMAL BOLD RED, current->player.name);
+            } else if (strcmp(response, "n") == 0 || strcmp(response, "N") == 0) {
+                printf("%s received no points.\n" BOLD RED, current->player.name);
+            } else {
+                printf(BOLD RED "Invalid input. Please enter 'y' or 'n'.\n" BOLD RED);
+                continue; // Repeat for the same player
+            }
+        }
+
+        current = current->next; // Move to the next player
+
+    }
+}
+
+void scoreboard(Node **head) {
+    if (head == NULL || *head == NULL) {
+        fprintf(stderr, "Error: Player list is empty or head is null.\n");
+        return;
+    }
+
+    // Count players
+    Node *current_player = *head;
+    int player_count = 0;
+    while (current_player != NULL) {
+        player_count++;
+        current_player = current_player->next;
+    }
+
+    // Allocate array for sorting
+    Node **players = malloc(player_count * sizeof(Node *));
+    if (players == NULL) {
+        perror("Failed to allocate memory for scoreboard");
+        return;
+    }
+
+    // Populate array
+    current_player = *head;
+    for (int i = 0; i < player_count; i++) {
+        players[i] = current_player;
+        current_player = current_player->next;
+    }
+
+    // Sort players by score (descending order)
+    for (int i = 0; i < player_count - 1; i++) {
+        for (int j = i + 1; j < player_count; j++) {
+            if (players[i]->player.score < players[j]->player.score) {
+                Node *temp = players[i];
+                players[i] = players[j];
+                players[j] = temp;
+            }
+        }
+    }
+
+    // Print the scoreboard
+    printf(BOLD RED "\n\t\t\t\tCURRENT STANDINGS\n");
+    printf(BOLD RED "=================================================================================\n");
+    printf(BOLD RED "| %-20s | %-10s | %-20s |\n" NORMAL, "PLAYER NAME", "SCORE", "STATUS");
+    printf(BOLD RED "=================================================================================\n");
+
+    // Highlight ties and top players
+    int top_score = players[0]->player.score;
+    for (int i = 0; i < player_count; i++) {
+        int is_tied = (i > 0 && players[i]->player.score == players[i - 1]->player.score);
+
+        if (players[i]->player.score == top_score) {
+            // Highlight the top player(s)
+            printf(BOLD GREEN "| %-20s | %-10d | %-20s |\n" NORMAL, 
+                   players[i]->player.name, 
+                   players[i]->player.score, 
+                   is_tied ? "TIED FOR TOP" : "LEADER");
+        } else if (is_tied) {
+            // Highlight tied players
+            printf(BOLD BLUE "| %-20s | %-10d | %-20s |\n" NORMAL, 
+                   players[i]->player.name, 
+                   players[i]->player.score, 
+                   "TIED");
+        } else {
+            // Regular players
+            printf("| %-20s | %-10d | %-20s |\n", 
+                   players[i]->player.name, 
+                   players[i]->player.score, 
+                   "-");
+        }
+    }
+
+    printf(BOLD RED "=================================================================================\n");
+
+    // Free allocated memory
+    free(players);
 }

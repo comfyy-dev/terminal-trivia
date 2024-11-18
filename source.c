@@ -22,41 +22,25 @@ int main(int argc, char *argv[]) {
     #endif
     intro(&total_players, &phead);
     create_questions_list(questions_file, &qhead, &total_questions);
+    clear_terminal();
 
     /*                              Trivia Loop                               */
     while (qhead && total_questions > 0) {
         // if player powerup >  0 ask to use
         QNode *current_question = get_question(&qhead, total_questions);
-        printf(BOLD RED"Question %d: %s\n", current_question->question.qid, current_question->question.question);
         Node *current_player = phead;
+        
         clock_timer();
         while (current_player != NULL) {
             get_hidden_input(current_player);
             current_player = current_player->next;
         }
-
-        
-        printf(BOLD RED"\nPress Enter to continue...\n");
-        while (getchar() != '\n' && getchar() != EOF);
-
+        wait_for_admin();
         clear_terminal();
-
-        printf(BOLD RED"You'd be surpised that the actual answer is: \n\n"BOLD GREEN"%s\n\n" , current_question->question.answer);
-        printf(BOLD RED"Lets see how you all did...\n");
-
-        current_player = phead;
-        while (current_player != NULL) {
-            printf(BOLD RED"---------------------------------------------------------------------------------\n");
-            printf("%s%s:\t\t"BOLD GREEN"%s\n",current_player->player.colour, current_player->player.name, current_player->player.answer);
-            current_player = current_player->next;
-        }
-        printf(BOLD RED"---------------------------------------------------------------------------------\n");
-
-        printf(BOLD RED UNDERLINE "DRINK UP LOSERS\n"NORMAL);
-        printf(BOLD RED"\nPress Enter to continue...\n");
-        while (getchar() != '\n' && getchar() != EOF);
-
-        clear_terminal();
+        reveal_answer(current_question, &phead);
+        wait_for_admin();
+        give_points(&phead);
+        scoreboard(&phead);
 
         // Enter players who were correct
         /* Give powerups 
@@ -64,6 +48,7 @@ int main(int argc, char *argv[]) {
                 - Double drink - double someones mistake
                 - More the merrier - make someone who guessed right drink
                 - Clip it! - Make someone record a sound for the discord
+                - Simon Says - Maybe in a cs game or IRL
                 - 
                 
                   */
@@ -83,6 +68,7 @@ int main(int argc, char *argv[]) {
         }
         #endif
         remove_question(&qhead, &current_question, &total_questions);
+        clear_terminal();
         // if final question -> double drink
     }
     printf("\n\nHope you guys enjoyed this :)\n\n\n");
