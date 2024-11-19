@@ -34,8 +34,11 @@ int main(int argc, char *argv[]) {
 
     /*                              Trivia Loop                               */
     while ((qhead && total_questions > 0) && (current_round <= total_rounds)) {
-        // if player powerup >  0 ask to use
         clear_terminal();
+
+        if (current_round == total_rounds) {
+            printf(NORMAL "FINAL QUESTION\n\n");
+        }
         #ifdef DEBUG
             printf(BOLD BLUE"total_questions = %d\n", total_questions+1);
             printf(BOLD BLUE"total_rounds = %d\n", total_rounds);
@@ -56,10 +59,19 @@ int main(int argc, char *argv[]) {
         wait_for_admin();
         clear_terminal();
         reveal_answer(current_question, &phead);
-        wait_for_admin();
         give_points(&phead);
-        clear_terminal();
-        scoreboard(&phead);
+        clear_terminal();        
+        remove_question(&qhead, &current_question, &total_questions);
+        wait_for_admin();
+    }
+    clear_terminal();
+    printf(NORMAL"\t\t\t\t    GAME OVER\n\n\n\n\n");
+    scoreboard(&phead);
+    printf("\n\nHope you guys enjoyed this :)\n\n\n");
+    free_lists(&qhead, &phead);
+    return EXIT_SUCCESS;
+}
+
         /* Give powerups 
                 - Truth - Ask a personal question they must answer
                 - Double drink - double someones mistake
@@ -67,15 +79,4 @@ int main(int argc, char *argv[]) {
                 - Clip it! - Make someone record a sound for the discord
                 - Simon Says - Maybe in a cs game or IRL
                 - 
-        */      
-
-        remove_question(&qhead, &current_question, &total_questions);
-        wait_for_admin();
-        
-        // if final question -> double drink
-    }
-    printf("\n\nHope you guys enjoyed this :)\n\n\n");
-    free_lists(&qhead, &phead);
-    return EXIT_SUCCESS;
-}
-
+        */
