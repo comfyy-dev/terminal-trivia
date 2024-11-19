@@ -78,13 +78,16 @@ Node *create_player(Node **head, int *joined_players) {
         current->next = new_node;
     }
 
-    printf(NORMAL "\nWelcome %s%s" NORMAL ". Go choose your beverage.\n",
-       new_node->player.colour, new_node->player.name);
-    for (int i = 0;i < 4; i++) {
-        printf(NORMAL".");
+    for (int i = 0;i < 30; i++) {
+        printf(NORMAL"=");
         fflush(stdout);
-        sleep_seconds(0.25);
+        sleep_seconds(0.025);
     }
+    printf("\r");
+
+    printf(NORMAL "Welcome %s%s                                \n\n" NORMAL,
+       new_node->player.colour, new_node->player.name);
+    
     (*joined_players)++;
 
     #ifdef DEBUG
@@ -96,18 +99,18 @@ Node *create_player(Node **head, int *joined_players) {
     return new_node; // Return the newly created node
 }
 
-void intro(int *total_players, Node **head) {
-
+void intro(int *total_players, int *total_rounds, Node **head) {
 
     printf(NORMAL"Parsing Universe's Knowledge"NORMAL"\n");
     printf(NORMAL"|");
     for (int i = 0; i < 27; i++) {
         printf(NORMAL"-");
         fflush(stdout);
-        sleep_seconds(0.25);
+        sleep_seconds(0.15);
     }
     printf(NORMAL"|\n\n");
 
+    // Get the number of players
     while (1) {
         printf(NORMAL"How many individuals do you want to inebriate?"" "GREEN BOLD);
         
@@ -116,7 +119,6 @@ void intro(int *total_players, Node **head) {
             // Check if input is a valid integer
             char *endptr;
             long num = strtol(input, &endptr, 10);
-
 
             // Validate input: must be a positive integer and within reasonable bounds
             if (endptr != input && *endptr == '\n' && num > 0 && num <= 20) {
@@ -129,17 +131,40 @@ void intro(int *total_players, Node **head) {
             printf(NORMAL"Error reading input. Please try again.\n");
         }
     }
+
+    // Get the number of questions
+    while (1) {
+        printf(NORMAL"How many questions should we go through?"" "GREEN BOLD);
+        
+        char input[10];
+        if (fgets(input, sizeof(input), stdin) != NULL) {
+            // Check if input is a valid integer
+            char *endptr;
+            long num = strtol(input, &endptr, 10);
+
+            // Validate input: must be a positive integer
+            if (endptr != input && *endptr == '\n' && num > 0) {
+                *total_rounds = (int)num; // Set the value to the provided pointer
+                break;
+            } else {
+                printf(NORMAL"Invalid input. Please enter a positive integer.\n");
+            }
+        } else {
+            printf(NORMAL"Error reading input. Please try again.\n");
+        }
+    }
+
     int joined_players = 0;
     while (joined_players != *total_players) {
         if (create_player(head, &joined_players) == NULL) {
             fprintf(stderr, "Failed to create the first player.\n");
             exit(EXIT_FAILURE);
         }
-        if (joined_players != *total_players) {
-            printf(NORMAL"\nOk. Next?\n\n");
-        }
     }
-    printf(NORMAL"\nLet us begin\n\n");
+    wait_for_admin();
+    clear_terminal();
+
+    printf(NORMAL"\n\n\n\n\n\n \t\t\t\t\tLet us begin\n\n\n\n\n\n");
 }
 
 

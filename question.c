@@ -2,13 +2,24 @@
 #include "trivia.h"
 #include "question.h"
 
-// Free all nodes in the linked list
-void free_list(QNode *head) {
-    while (head) {
-        QNode *temp = head;
-        head = head->next;
+void free_lists(QNode **qhead, Node **phead) {
+    // Free the question list
+    while (*qhead) {
+        QNode *temp = *qhead;
+        *qhead = (*qhead)->next;
         free(temp);
     }
+
+    // Free the player list
+    while (*phead) {
+        Node *temp = *phead;
+        *phead = (*phead)->next;
+        free(temp);
+    }
+
+    // Set the heads to NULL
+    *qhead = NULL;
+    *phead = NULL;
 }
 
 void add_question(QNode **head, const char *question_text, const char *answer_text, int qid) {
@@ -82,19 +93,22 @@ void create_questions_list(const char *filename, QNode **qhead, int *total_quest
     fclose(file);
 }
 
-QNode *get_question(QNode **head, int total_questions) {
+QNode *get_question(QNode **head, int total_questions, int *current_round) {
     if (*head == NULL || total_questions <= 0) {
-        fprintf(stderr, "[Get_Question] Error: No questions available or invalid total_questions.\n");
+        #ifdef DEBUG
+            fprintf(stderr, "[Get_Question] Error: No questions available or invalid total_questions.\n");
+        #endif
         return NULL;
     }
-    srand(time(NULL));
+    
     int random_index = rand() % total_questions;
 
     QNode *current = *head;
      for (int i = 0; i < random_index; i++) {
         current = current->next;
     }
-    printf(NORMAL"Question %d: %s\n", current->question.qid, current->question.question);
+    printf(NORMAL"Question %d: %s\n", *current_round, current->question.question);
+    (*current_round)++;
     return current;
 }
 

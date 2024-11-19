@@ -17,9 +17,9 @@ typedef struct QNode {
 
 void create_questions_list(const char *filename, QNode **qhead, int *total_questions);
 void add_question(QNode **head, const char *question_text, const char *answer_text, int qid);
-QNode *get_question(QNode **head, int total_questions);
+QNode *get_question(QNode **head, int total_questions, int *current_round);
 void remove_question(QNode **head, QNode **current, int *total_questions);
-void free_list(QNode *head);
+void free_lists(QNode *qhead, Node **phead);
 void reveal_answer(QNode *c_question, Node **head);
 
 #endif

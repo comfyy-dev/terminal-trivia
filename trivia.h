@@ -67,7 +67,7 @@ typedef struct Node {
 } Node;
 
 void sleep_seconds(double seconds);
-void intro(int * total_players, Node **head);
+void intro(int *total_players, int *total_rounds, Node **head);
 void clear_terminal();
 Node *create_player(Node **head, int *joined_players);
 void clock_timer();
