@@ -36,6 +36,10 @@ int main(int argc, char *argv[]) {
     while ((qhead && total_questions > 0) && (current_round <= total_rounds)) {
         clear_terminal();
 
+        if (current_round % 5 == 0) {
+            special_round(&phead);
+        }
+
         if (current_round == total_rounds) {
             printf(NORMAL "FINAL QUESTION\n\n");
         }
@@ -50,8 +54,9 @@ int main(int argc, char *argv[]) {
             break;
         }
         Node *current_player = phead;
-        
-        clock_timer();
+        #ifdef RELEASE
+            clock_timer();
+        #endif
         while (current_player != NULL) {
             get_hidden_input(current_player);
             current_player = current_player->next;
@@ -60,23 +65,21 @@ int main(int argc, char *argv[]) {
         clear_terminal();
         reveal_answer(current_question, &phead);
         give_points(&phead);
-        clear_terminal();        
+        clear_terminal();
+        if (current_round != total_rounds) {
+            scoreboard(&phead);
+        }
         remove_question(&qhead, &current_question, &total_questions);
         wait_for_admin();
+        current_round++;
     }
     clear_terminal();
     printf(NORMAL"\t\t\t\t    GAME OVER\n\n\n\n\n");
     scoreboard(&phead);
+    play_sound(0);
     printf("\n\nHope you guys enjoyed this :)\n\n\n");
     free_lists(&qhead, &phead);
     return EXIT_SUCCESS;
 }
 
-        /* Give powerups 
-                - Truth - Ask a personal question they must answer
-                - Double drink - double someones mistake
-                - More the merrier - make someone who guessed right drink
-                - Clip it! - Make someone record a sound for the discord
-                - Simon Says - Maybe in a cs game or IRL
-                - 
-        */
+        

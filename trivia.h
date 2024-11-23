@@ -10,6 +10,7 @@
 #include <ctype.h>
 #include <errno.h> // For EINTR
 #include <termios.h>
+#include <sys/types.h>
 
 #define BLACK   "\033[30m"       // foreground colours
 #define RED     "\033[31m"
@@ -75,6 +76,7 @@ void wait_for_admin();
 void get_hidden_input(Node *current);
 void give_points(Node **head);
 void scoreboard(Node **head);
+void play_sound(int option);
 
 
 #endif

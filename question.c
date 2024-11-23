@@ -108,7 +108,7 @@ QNode *get_question(QNode **head, int total_questions, int *current_round) {
         current = current->next;
     }
     printf(NORMAL"Question %d: %s\n", *current_round, current->question.question);
-    (*current_round)++;
+  
     return current;
 }
 
@@ -147,4 +147,22 @@ void reveal_answer(QNode *c_question, Node **head) {
         }
         printf(NORMAL"---------------------------------------------------------------------------------\n"NORMAL);
         printf(NORMAL UNDERLINE "DRINK UP\n"NORMAL);
+}
+
+void special_round(Node **phead) {
+    printf(NORMAL "Does the admin want to throw a curveball?\n");
+    scoreboard(phead);
+    wait_for_admin();
+    give_points(phead);
+    wait_for_admin();
+    clear_terminal();
+    
+    /* Activities
+        - Truth - Ask a personal question they must answer
+        - Double drink - double someones mistake
+        - More the merrier - make someone who guessed right drink
+        - Clip it! - Make someone record a sound for the discord
+        - Simon Says - Maybe in a cs game or IRL
+        - Challenges - NadeKing
+    */
 }

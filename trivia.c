@@ -51,7 +51,7 @@ Node *create_player(Node **head, int *joined_players) {
                 }
             }
             if (strlen(new_node->player.name) > 0) {
-                break; // Exit loop if valid input
+                break; 
             } else {
                 printf(NORMAL"\nName cannot be empty. Please try again.\n");
             }
@@ -67,13 +67,13 @@ Node *create_player(Node **head, int *joined_players) {
     new_node->next = NULL;
     new_node->player.id = *joined_players;
 
-    // Attach node to the list
+    
     if (*head == NULL) {
         *head = new_node;
     } else {
         Node *current = *head;
         while (current->next != NULL) {
-            current = current->next; // Traverse to the end of the list
+            current = current->next; 
         }
         current->next = new_node;
     }
@@ -169,18 +169,17 @@ void intro(int *total_players, int *total_rounds, Node **head) {
 
 
 void clock_timer() {
-    for (int i = 5; i >= 0; i--) {
+    play_sound(1);
+    for (int i = 40; i >= 0; i--) {
         if (i <= 10) {
             printf(NORMAL"\rCountdown: " NORMAL ON_WHITE"%d" NORMAL  
-                   " seconds remaining...   ", i); // Overwrite the same line
-            printf("\a");
+                         " seconds remaining...   ", i); // Overwrite the same line
         } else {
             printf(NORMAL"\rCountdown: %d  seconds remaining...   ", i); // Overwrite the same line
-        }
+         }
         fflush(stdout);
         sleep_seconds(1.0);
     }
-    system("aplay ./times_up.wav > /dev/null 2>&1");
     printf(NORMAL"\n\rTimes Up                              \n\n");
 }
 
@@ -352,4 +351,31 @@ void scoreboard(Node **head) {
 
     // Free allocated memory
     free(players);
+}
+
+void play_sound(int option) {
+    pid_t pid = fork(); // Create a new process
+
+    if (pid < 0) {
+        // Fork failed
+        perror("Fork failed");
+        exit(EXIT_FAILURE);
+    } else if (pid == 0) {
+        // Child process
+        // Execute the aplay command
+        switch (option) {
+            case 0:
+                system("aplay ./audio/celebrate.wav > /dev/null 2>&1");
+                break;
+            case 1:
+                system("aplay ./audio/bomb.wav > /dev/null 2>&1");
+                break;
+            default:
+                fprintf(stderr, "Invalid sound option: %d\n", option); 
+                exit(EXIT_FAILURE);
+        }
+        
+        exit(EXIT_SUCCESS); // Exit the child process after playing the sound
+    } 
+    // Parent process continues execution
 }

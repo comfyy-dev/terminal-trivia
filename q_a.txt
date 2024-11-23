@@ -1,65 +1,39 @@
 What is the maximum player limit in Counter-Strike 1.6?,32
 What year was Counter-Strike: Source released?,2004
-Which weapon in CS:GO has the highest damage?,650
-How many maps are available in CS2 at launch?,8
 What is the default round time in competitive mode in CS 1.6?,5
-Which team won the first CS:GO Major?,2013
-What is the default bomb timer in CS:GO?,40
-What is the cost of a Desert Eagle in CS 1.6?,650
-What is the maximum armor value in Counter-Strike?,100
-How many competitive maps are included in CS:GO's active duty pool?,7
-What is the default starting money in CS:GO competitive mode?,800
-What is the default resolution setting in CS 1.6? (number with no x e.g: 19201080),640480
-What is the reload time of the AK-47 in CS:GO?,2.5
-How many bullets does the Glock-18 magazine hold in CS:GO?,20
-What is the default frame rate limit in CS:GO?,300
-What is the cost of the defuse kit in CS:GO?,400
-How many grenades can a player carry in CS:GO?,4
-What is the base damage of the AK-47 in CS:GO?,36
-What is the weight of a frag grenade in CS:GO?,0.5
-What year was CS:GO officially released?,2012
+When was the first CS:GO Major?,2013 
+Who won the first CSGO Major?,Fnatic
+What is the default resolution setting in CS 1.6? (WxH),640x480
 How many headshot kills does it take to win a round in Gun Game?,16
-What is the maximum number of rounds in a competitive CS:GO match?,30
-What is the cost of an M4A4 in CS:GO?,3100
-What is the maximum number of grenades in Counter-Strike?,5
-What is the default tick rate of CS:GO matchmaking servers?,64
-What is the effective range of the AWP in CS:GO?,150
 What is the damage of the knife in CS:GO backstab?,150
-What is the duration of a flashbang in CS:GO?,2
-What is the cost of a P90 in CS:GO?,2350
-What is the rate of fire of the M4A4 in CS:GO?,666
-What is the weight of the M249 in CS:GO?,9.2
-How many Molotov cocktails can a player carry in CS:GO?,1
-What is the default ping limit in CS:GO matchmaking?,150
-What is the maximum number of players supported in Counter-Strike: Source?,64
-What is the standard armor cost in Counter-Strike?,650
-What is the price of the Tec-9 in CS:GO?,500
 How many chickens can spawn in a casual game on Inferno?,10
-What is the reload time of the USP-S in CS:GO?,2.2
-What is the effective range of the M4A1-S?,90
-What is the kill reward for an AWP kill in CS:GO?,100
-What is the maximum number of bots in Counter-Strike?,32
-What is the maximum matchmaking rank in CS:GO?,10
-What is the magazine capacity of the Negev in CS:GO?,150
-What is the tick rate of CS2 servers?,128
-What is the cost of Kevlar + Helmet in CS:GO?,1000
-What is the cooldown time for throwing a grenade?,1.5
-What is the weight of a Molotov in CS:GO?,1.1
-What is the maximum number of bullets for the Scout in CS:GO?,90
-What is the starting ammo for the Glock-18 in CS 1.6?,120
-What is the base damage of the Desert Eagle?,54
-What is the reload time of the M4A1-S in CS:GO?,3.1
 What is the highest number of frags recorded in a single pro match?,93
-What is the maximum kill bonus in CS:GO?,1500
-What is the average bomb plant time in CS:GO?,3.2
-What is the effective range of the AK-47 in CS:GO?,400
-What is the maximum ammo capacity for the AWP in CS:GO?,30
 Which map has a train as a feature?,Overpass
-What is the minimum number of players required to start a match?,10
-What is comfy's highest premier rank?,20780
+What is the average premier rating of the Dreamhack Club on leetify?,17749
+What is the average win percentage of the Dreamhack Club on leetify?,67%
+What is the average leetify rating of the Dreamhack Club?,3.28
 How many hours does Monesy have in CS?,15000
 How much mental damage does calling comfy a nerd inflict? (0-100), 50
 How much stamina does a jump take initially?,23.9
 What is the max amount of units can you jump throw a smoke?,2694
 What is the minimum amount of units can you jump throw a smoke?,67
 What is the absolute maximum time a game of Premier CS2 can go for?(seconds),5332 
+What did the easter egg in the basalt lighthouse do?,Black and white 
+How many MVP's does comfy have as of today?,6098
+How many hours does comfy have as of today?,8161
+What is the appropiate response to someone calling out a particular kill on ancient or nuke?,Redemption
+What key sequence produces the output: Cheer!,F1:3
+What can George not do while jump-spotting?,Breathe
+What thing can Trent or sparky do that immediately triggers the same response in the other?,Dumb laugh (HUEHUE)
+What should the name of the tunnel in the new Train be?,Pop/Long Dog
+Which operation first introduced co-op missions in CS:GO?,Wildfire
+What rank is Sid in the world in premier?,1 823 354
+What is the 24-hour peak player count for CS?, 1 461 437
+Hoow many reviews does the CSGO/CS2 steam page have in total?, 8 404 090
+What is the AppId of Counter-Strike?,730
+What music kit is n0thing a feature on?,Flashbang Dance
+How many updates has Valve released so far in 2024?,75
+What thing associated with premier mode is the longest running of any game ever?,Season One
+What map is known for the 5-man running tower?,Nuke
+How many street signs are there on Inferno?,35
+What is the colour of the tarp on second oranges in Inferno?,Blue

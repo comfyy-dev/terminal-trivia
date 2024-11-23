@@ -21,5 +21,6 @@ QNode *get_question(QNode **head, int total_questions, int *current_round);
 void remove_question(QNode **head, QNode **current, int *total_questions);
 void free_lists(QNode **qhead, Node **phead);
 void reveal_answer(QNode *c_question, Node **head);
+void special_round(Node **phead);
 
 #endif

@@ -13,13 +13,13 @@ DEBUG_BIN = comfytrivia_debug
 release: CFLAGS += -DRELEASE -O2
 release:
 	$(CC) $(CFLAGS) -o $(RELEASE_BIN) $(SRCS)
-	./$(RELEASE_BIN) q_a.txt
+	./$(RELEASE_BIN) example.txt
 
 # Debug build and run
 debug: CFLAGS += -DDEBUG -g
 debug:
 	$(CC) $(CFLAGS) -o $(DEBUG_BIN) $(SRCS)
-	./$(DEBUG_BIN) test.csv
+	./$(DEBUG_BIN) example.txt
 
 # Clean up generated files
 clean:
