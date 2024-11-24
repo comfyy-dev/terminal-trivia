@@ -50,7 +50,7 @@ Before you begin, ensure you have the following installed:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/comfyy-dev/trivia.git
+   git clone https://github.com/comfyy-dev/terminal-trivia.git
    ```
 
 2. Navigate to the project directory:
@@ -63,10 +63,10 @@ Before you begin, ensure you have the following installed:
    make release
    ```
 
-4. Run the game:
-   ```bash
-   ./terminal_trivia
-   ```
+4. Compile debug version
+```bash
+make debug
+```
 
 ---
 
@@ -96,7 +96,7 @@ Contributions are always welcome!
 
 ## 📬 Contact
 
-Developed by **Your Name**  
+Developed by **W. Nick Marais**  
 - Email: [comfyy.content@gmail.com](mailto:comfyy.content@gmail.com)  
 - GitHub: [https://github.com/comfyy-dev](https://github.com/comfyy-dev)
 
